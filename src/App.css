@@ -598,20 +598,23 @@ button.danger {
 }
 
 .multi-todo-badge {
-    height: 35px;
     width: 100%;
     margin-top: 0;
     justify-content: flex-start;
     padding-right: 8px;
+    min-height: 35px;
+    height: auto;
 }
 
 .multi-todo-badge .thumb-label {
     text-align: left;
+    flex: 1;
+    min-width: 0;
 }
 
 .multi-todo-card-text {
     display: inline-block;
-    max-width: 150px;
+    max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
