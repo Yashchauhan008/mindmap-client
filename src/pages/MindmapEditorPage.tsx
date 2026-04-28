@@ -52,9 +52,13 @@ function areSameIds(prev: string[], next: string[]) {
 function FlowEditor({
     title,
     onTitleChange,
+    isDarkMode,
+    onToggleTheme,
 }: {
     title: string;
     onTitleChange: (title: string) => void;
+    isDarkMode: boolean;
+    onToggleTheme: () => void;
 }) {
     const { mindmapId } = useParams();
     const reactFlow = useReactFlow();
@@ -282,6 +286,49 @@ function FlowEditor({
         }
     };
 
+    const handleDuplicateSelectedNode = useCallback(() => {
+        if (selectedNodeIds.length !== 1) return;
+
+        const sourceNode = nodes.find((node) => node.id === selectedNodeIds[0]);
+        if (!sourceNode) return;
+
+        const duplicatedNode: AnyNode = {
+            ...sourceNode,
+            id: crypto.randomUUID(),
+            position: {
+                x: sourceNode.position.x + 40,
+                y: sourceNode.position.y + 40,
+            },
+            // Clone node data so future edits don't accidentally share references.
+            data:
+                typeof structuredClone === 'function'
+                    ? structuredClone(sourceNode.data)
+                    : JSON.parse(JSON.stringify(sourceNode.data)),
+            selected: true,
+        };
+
+        setNodes((currentNodes) => [
+            ...currentNodes.map((node) => ({ ...node, selected: false })),
+            duplicatedNode,
+        ]);
+        setSelectedNodeIds([duplicatedNode.id]);
+        setSelectedEdgeIds([]);
+        setIsDirty(true);
+    }, [nodes, selectedNodeIds, setNodes]);
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            const isDuplicateShortcut = (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'd';
+            if (!isDuplicateShortcut) return;
+
+            event.preventDefault();
+            handleDuplicateSelectedNode();
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [handleDuplicateSelectedNode]);
+
     if (isLoading) return <p>Loading editor...</p>;
 
     return (
@@ -295,6 +342,9 @@ function FlowEditor({
                     }}
                 />
                 <div className="row">
+                    <button type="button" onClick={onToggleTheme}>
+                        {isDarkMode ? 'Light mode' : 'Dark mode'}
+                    </button>
                     <button onClick={handleSave} disabled={saveMutation.isPending}>
                         {saveMutation.isPending ? 'Saving...' : isDirty ? 'Save' : 'Saved'}
                     </button>
@@ -365,6 +415,13 @@ function FlowEditor({
                             Auto Layout
                         </button>
                         <button
+                            className="ghost"
+                            onClick={handleDuplicateSelectedNode}
+                            disabled={selectedNodeIds.length !== 1}
+                        >
+                            Duplicate Selected
+                        </button>
+                        <button
                             className="danger"
                             onClick={handleDeleteSelected}
                             disabled={!selectedNodeIds.length && !selectedEdgeIds.length}
@@ -415,13 +472,24 @@ function FlowEditor({
     );
 }
 
-export default function MindmapEditorPage() {
+export default function MindmapEditorPage({
+    isDarkMode,
+    onToggleTheme,
+}: {
+    isDarkMode: boolean;
+    onToggleTheme: () => void;
+}) {
     const [title, setTitle] = useState('Untitled mind map');
 
     return (
         <div className="page editor-page">
             <ReactFlowProvider>
-                <FlowEditor title={title} onTitleChange={setTitle} />
+                <FlowEditor
+                    title={title}
+                    onTitleChange={setTitle}
+                    isDarkMode={isDarkMode}
+                    onToggleTheme={onToggleTheme}
+                />
             </ReactFlowProvider>
         </div>
     );

@@ -33,7 +33,7 @@ export default function MindmapsPage() {
     const mindmaps = useMemo(() => data?.data ?? [], [data]);
 
     return (
-        <div className="relative min-h-screen overflow-hidden bg-[#f4f6fb] px-4 py-8 text-slate-900 sm:px-8">
+        <div className="mindmaps-page relative min-h-screen overflow-hidden bg-[#f4f6fb] px-4 py-8 text-slate-900 sm:px-8">
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_25%_20%,rgba(236,72,153,0.15),transparent_32%),radial-gradient(circle_at_80%_25%,rgba(99,102,241,0.12),transparent_30%),radial-gradient(circle_at_60%_85%,rgba(244,114,182,0.1),transparent_34%)]" />
             <div className="relative mx-auto max-w-6xl space-y-6">
                 <header className="rounded-2xl border border-white/70 bg-white/75 p-5 shadow-xl shadow-pink-100/60 backdrop-blur-xl">

@@ -26,6 +26,26 @@ function getIdeaOutput(nodeId: string, nodeMap: Map<string, AnyNode>, edges: Edg
   return mainStatuses.has(selectedStatus) ? 100 : 0;
 }
 
+function getMultiTodoOutput(nodeId: string, nodeMap: Map<string, AnyNode>) {
+  const node = nodeMap.get(nodeId);
+  if (!node) return null;
+
+  const todos = Array.isArray(node.data?.todos) ? node.data.todos : [];
+  const normalized = todos
+    .map((item) => (item && typeof item === 'object' ? (item as Record<string, unknown>) : null))
+    .filter((item): item is Record<string, unknown> => Boolean(item))
+    .map((item) => ({
+      text: typeof item.text === 'string' ? item.text.trim() : '',
+      done: Boolean(item.done),
+    }))
+    .filter((item) => item.text.length > 0);
+
+  if (normalized.length === 0) return 0;
+
+  const toggledCount = normalized.filter((item) => item.done).length;
+  return Math.round((toggledCount / normalized.length) * 100);
+}
+
 export function computeNodeOutput(
   nodeId: string,
   nodeMap: Map<string, AnyNode>,
@@ -40,6 +60,10 @@ export function computeNodeOutput(
 
   if (node.type === 'todoNode') {
     return node.data?.completed ? 100 : 0;
+  }
+
+  if (node.type === 'multiTodoNode') {
+    return getMultiTodoOutput(nodeId, nodeMap);
   }
 
   if (node.type === 'ideaNode') {
@@ -59,7 +83,10 @@ export function computeNodeOutput(
 
     if (node.type === 'decisionNode') {
       const decisionValue = String(node.data?.decisionValue || 'yes');
-      return decisionValue === 'yes' ? baseOutput : 0;
+      // Decision node is an on/off gate:
+      // - yes: pass incoming value through
+      // - no: block output (exclude from downstream averages)
+      return decisionValue === 'yes' ? baseOutput : null;
     }
 
     return baseOutput;
@@ -72,11 +99,16 @@ export function countIncomingFunctionalInputs(nodeId: string, nodeMap: Map<strin
   const inputIds = getIncomingNodeIds(nodeId, edges);
   return inputIds.filter((inputId) => {
     const inputNode = nodeMap.get(inputId);
-    return (
+    const isFunctionalInput =
       inputNode?.type === 'todoNode' ||
+      inputNode?.type === 'multiTodoNode' ||
       inputNode?.type === 'ideaNode' ||
       inputNode?.type === 'percentageNode' ||
-      inputNode?.type === 'decisionNode'
-    );
+      inputNode?.type === 'decisionNode';
+
+    if (!isFunctionalInput) return false;
+
+    // Count only active inputs that currently produce an output.
+    return computeNodeOutput(inputId, nodeMap, edges) !== null;
   }).length;
 }

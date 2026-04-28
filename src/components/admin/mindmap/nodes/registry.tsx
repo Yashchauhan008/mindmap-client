@@ -4,6 +4,7 @@ import { decisionNodeDefinition } from './decisionNode';
 import { ideaNodeDefinition } from './ideaNode';
 import { linkNodeDefinition } from './linkNode';
 import { mediaNodeDefinition } from './mediaNode';
+import { multiTodoNodeDefinition } from './multiTodoNode';
 import { percentageNodeDefinition } from './percentageNode';
 import { statusNodeDefinition } from './statusNode';
 import { todoNodeDefinition } from './todoNode';
@@ -14,6 +15,7 @@ export const NODE_DEFINITIONS: NodeDefinition[] = [
   categoryNodeDefinition,
   statusNodeDefinition,
   todoNodeDefinition,
+  multiTodoNodeDefinition,
   percentageNodeDefinition,
   linkNodeDefinition,
   mediaNodeDefinition,

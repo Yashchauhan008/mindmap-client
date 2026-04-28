@@ -2,6 +2,10 @@
     width: 100%;
 }
 
+.app-shell {
+    position: relative;
+}
+
 .page {
     min-height: 100vh;
     background: #f6f7fb;
@@ -560,4 +564,125 @@ button.danger {
     align-items: center;
     font-size: 13px;
     color: #334155;
+}
+
+.multi-todo-list {
+    max-height: 280px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.multi-todo-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.multi-todo-list::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 999px;
+}
+
+.multi-todo-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.multi-todo-card-list {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.multi-todo-card-row {
+    justify-content: flex-start;
+    gap: 6px;
+}
+
+.multi-todo-badge {
+    height: 35px;
+    width: 100%;
+    margin-top: 0;
+    justify-content: flex-start;
+    padding-right: 8px;
+}
+
+.multi-todo-badge .thumb-label {
+    text-align: left;
+}
+
+.multi-todo-card-text {
+    display: inline-block;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+html[data-theme='dark'] body,
+html[data-theme='dark'] #root {
+    background: #0b1220;
+    color: #e2e8f0;
+}
+
+html[data-theme='dark'] .page,
+html[data-theme='dark'] .editor-page {
+    background: #0f172a;
+}
+
+html[data-theme='dark'] .card,
+html[data-theme='dark'] .node-side-panel,
+html[data-theme='dark'] .floating-actions,
+html[data-theme='dark'] .floating-node-editor,
+html[data-theme='dark'] .floating-node-palette,
+html[data-theme='dark'] .mind-node-card,
+html[data-theme='dark'] .flow-hint {
+    background: rgba(15, 23, 42, 0.92);
+    border-color: #334155;
+    color: #e2e8f0;
+}
+
+html[data-theme='dark'] .mind-node-title {
+    color: #f8fafc;
+}
+
+html[data-theme='dark'] .mind-node-subtitle,
+html[data-theme='dark'] .node-helper-text,
+html[data-theme='dark'] .node-side-panel p,
+html[data-theme='dark'] .node-side-panel label,
+html[data-theme='dark'] .floating-node-editor label,
+html[data-theme='dark'] .checkbox-row {
+    color: #94a3b8;
+}
+
+html[data-theme='dark'] .editor-canvas {
+    background: #0b1220;
+    border-color: #334155;
+}
+
+html[data-theme='dark'] .search-box input,
+html[data-theme='dark'] .editor-toolbar input,
+html[data-theme='dark'] .floating-node-editor input,
+html[data-theme='dark'] .floating-node-editor textarea,
+html[data-theme='dark'] .floating-node-editor select,
+html[data-theme='dark'] .node-side-panel select {
+    background: #111827;
+    color: #e2e8f0;
+    border-color: #334155;
+}
+
+html[data-theme='dark'] .mindmaps-page header,
+html[data-theme='dark'] .mindmaps-page .group,
+html[data-theme='dark'] .mindmaps-page .rounded-2xl {
+    background: rgba(15, 23, 42, 0.85) !important;
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+
+html[data-theme='dark'] .multi-todo-list::-webkit-scrollbar-thumb {
+    background: #475569;
+}
+
+html[data-theme='dark'] .multi-todo-badge {
+    border-color: #475569;
+    background: linear-gradient(180deg, #1f2937 0%, #111827 100%);
+    color: #cbd5e1;
 }

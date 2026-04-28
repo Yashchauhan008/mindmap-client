@@ -6,7 +6,17 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './index.css';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            retry: (failureCount, error) => {
+                const status = (error as { response?: { status?: number } })?.response?.status;
+                if (status === 401) return false;
+                return failureCount < 2;
+            },
+        },
+    },
+});
 const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 if (!googleClientId) {

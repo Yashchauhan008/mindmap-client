@@ -6,6 +6,7 @@ export type SupportedNodeType =
   | 'categoryNode'
   | 'statusNode'
   | 'todoNode'
+  | 'multiTodoNode'
   | 'percentageNode'
   | 'linkNode'
   | 'mediaNode'
