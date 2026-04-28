@@ -53,6 +53,7 @@ function MultiTodoNodeCard({ id, data, selected }: NodeProps<AnyNode>) {
     <BaseCustomNode
       selected={selected}
       tone="amber"
+      width={320}
       title={(data?.label as string) || 'Multi Todo'}
       subtitle={`Toggled ${toggled}/${total} • Output ${output}%`}
       note={(data?.note as string) || ''}
