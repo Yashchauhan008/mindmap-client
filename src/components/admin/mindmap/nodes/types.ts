@@ -11,7 +11,8 @@ export type SupportedNodeType =
   | 'linkNode'
   | 'mediaNode'
   | 'decisionNode'
-  | 'todoListSummaryNode';
+  | 'todoListSummaryNode'
+  | 'calendarNode';
 
 export type AnyNode = Node<Record<string, unknown>, string>;
 export type NodeCardComponent = (props: NodeProps<AnyNode>) => ReactNode;

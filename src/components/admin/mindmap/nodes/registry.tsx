@@ -9,6 +9,7 @@ import { percentageNodeDefinition } from './percentageNode';
 import { statusNodeDefinition } from './statusNode';
 import { todoNodeDefinition } from './todoNode';
 import { todoListSummaryNodeDefinition } from './todoListSummaryNode';
+import { calendarNodeDefinition } from './calendarNode';
 import type { NodeDefinition, NodeInspectorContext, SupportedNodeType } from './types';
 
 const NODE_INFO_MAP: Record<SupportedNodeType, NodeInfo> = {
@@ -62,6 +63,11 @@ const NODE_INFO_MAP: Record<SupportedNodeType, NodeInfo> = {
     outputs: 'Aggregated list of all sub-tasks',
     passThrough: 'Collects todos from entire branch',
   },
+  calendarNode: {
+    inputs: 'None',
+    outputs: 'Percentage of days tracked',
+    passThrough: 'None',
+  },
 };
 
 export const NODE_DEFINITIONS: NodeDefinition[] = [
@@ -75,6 +81,7 @@ export const NODE_DEFINITIONS: NodeDefinition[] = [
   mediaNodeDefinition,
   decisionNodeDefinition,
   todoListSummaryNodeDefinition,
+  calendarNodeDefinition,
 ].map((def) => ({
   ...def,
   info: NODE_INFO_MAP[def.type],
@@ -140,6 +147,12 @@ export function getPreviewData(type: SupportedNodeType): Record<string, unknown>
     mediaNode: { label: 'Branding Assets' },
     decisionNode: { label: 'Approve Budget?', options: 'yes/no' },
     todoListSummaryNode: { label: 'Team Tasks Summary' },
+    calendarNode: {
+      label: 'Daily Yoga Habit',
+      month: new Date().getMonth() + 1,
+      year: new Date().getFullYear(),
+      trackedDates: { '1': true, '2': true, '3': true, '5': true, '8': true, '12': true },
+    },
   };
   return { ...baseData, ...previews[type] };
 }

@@ -5,6 +5,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import LoginPage from './pages/LoginPage';
 import MindmapsPage from './pages/MindmapsPage';
 import MindmapEditorPage from './pages/MindmapEditorPage';
+import LandingPage from './pages/LandingPage';
 import './App.css';
 
 export default function App() {
@@ -20,7 +21,7 @@ export default function App() {
         <AuthProvider>
             <div className="app-shell">
                 <Routes>
-                    <Route path="/" element={<Navigate to="/mindmaps" replace />} />
+                    <Route path="/" element={<LandingPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route
                         path="/mindmaps"
