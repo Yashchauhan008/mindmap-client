@@ -8,6 +8,7 @@ import { multiTodoNodeDefinition } from './multiTodoNode';
 import { percentageNodeDefinition } from './percentageNode';
 import { statusNodeDefinition } from './statusNode';
 import { todoNodeDefinition } from './todoNode';
+import { todoListSummaryNodeDefinition } from './todoListSummaryNode';
 import type { NodeDefinition, NodeInspectorContext, SupportedNodeType } from './types';
 
 export const NODE_DEFINITIONS: NodeDefinition[] = [
@@ -20,6 +21,7 @@ export const NODE_DEFINITIONS: NodeDefinition[] = [
   linkNodeDefinition,
   mediaNodeDefinition,
   decisionNodeDefinition,
+  todoListSummaryNodeDefinition,
 ];
 
 export const NODE_DEF_MAP = NODE_DEFINITIONS.reduce(

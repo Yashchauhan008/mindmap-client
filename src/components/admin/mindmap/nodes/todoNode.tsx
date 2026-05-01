@@ -29,8 +29,7 @@ function TodoNodeCard({ id, data, selected }: NodeProps<AnyNode>) {
     <BaseCustomNode
       selected={selected}
       tone="amber"
-      title={`${completed ? 'Done' : 'Todo'}: ${(data?.label as string) || 'Task'}`}
-      subtitle="Checklist node"
+      title={`${(data?.label as string) || ''}`}
       note={(data?.note as string) || ''}
       extraContent={
         <button

@@ -1,19 +1,63 @@
 /* eslint-disable react-refresh/only-export-components */
 import type { NodeProps } from '@xyflow/react';
-import { BaseCustomNode, TextAndNoteFields } from './shared';
+import { withAllHandles, TextAndNoteFields } from './shared';
 import type { AnyNode, NodeDefinition, NodeInspectorContext } from './types';
 import { Input } from '../../../ui/input';
 import { Label } from '../../../ui/label';
 
 function LinkNodeCard({ data, selected }: NodeProps<AnyNode>) {
+  const url = String(data?.url || '').trim();
+  const safeUrl = url.startsWith('http') ? url : `https://${url}`;
+
   return (
-    <BaseCustomNode
-      selected={selected}
-      tone="blue"
-      title={(data?.label as string) || 'Reference link'}
-      subtitle={(data?.url as string) || 'https://example.com'}
-      note={(data?.note as string) || ''}
-    />
+    <div
+      className={`mind-node-card ${selected ? 'selected' : ''}`}
+      style={{
+        width: '130px',
+        minHeight: '40px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: '#eff6ff',
+        borderColor: '#bfdbfe',
+        padding: '6px',
+      }}
+    >
+      {withAllHandles()}
+      <a
+        href={safeUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="node-inline-thumb-toggle nodrag nopan active"
+        style={{
+          textDecoration: 'none',
+          width: '100%',
+          height: '28px',
+          fontSize: '11px',
+          gap: '6px',
+          margin: 0,
+          justifyContent: 'center',
+          background: 'linear-gradient(180deg, #dbeafe 0%, #eff6ff 100%)',
+          borderColor: '#3b82f6',
+          color: '#1d4ed8',
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <span
+          className="thumb-icon"
+          aria-hidden
+          style={{ width: '16px', height: '16px', fontSize: '10px', background: '#3b82f6', color: '#fff' }}
+        >
+          🔗
+        </span>
+        <span
+          className="thumb-label"
+          style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
+        >
+          {url ? 'Visit Link' : 'No Link'}
+        </span>
+      </a>
+    </div>
   );
 }
 

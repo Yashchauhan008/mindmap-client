@@ -10,7 +10,8 @@ export type SupportedNodeType =
   | 'percentageNode'
   | 'linkNode'
   | 'mediaNode'
-  | 'decisionNode';
+  | 'decisionNode'
+  | 'todoListSummaryNode';
 
 export type AnyNode = Node<Record<string, unknown>, string>;
 export type NodeCardComponent = (props: NodeProps<AnyNode>) => ReactNode;

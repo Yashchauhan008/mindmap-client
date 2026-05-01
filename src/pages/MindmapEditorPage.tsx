@@ -247,7 +247,7 @@ function FlowEditor({
         setIsDirty(true);
     };
 
-    const handleSave = () => {
+    const handleSave = useCallback(() => {
         if (!mindmapId) return;
         const viewport = reactFlow.getViewport();
         saveMutation.mutate({
@@ -257,7 +257,17 @@ function FlowEditor({
             edges,
             viewport,
         });
-    };
+    }, [mindmapId, reactFlow, saveMutation, title, nodes, edges]);
+
+    useEffect(() => {
+        if (!isDirty) return;
+
+        const timer = setTimeout(() => {
+            handleSave();
+        }, 1500); // 1.5 seconds debounce
+
+        return () => clearTimeout(timer);
+    }, [isDirty, handleSave]);
 
     const handleDeleteSelected = () => {
         if (selectedEdgeIds.length > 0) {
@@ -342,13 +352,13 @@ function FlowEditor({
                     }}
                 />
                 <div className="row">
-                    <button type="button" onClick={onToggleTheme}>
+                    <button type="button" className='whitespace-nowrap' onClick={onToggleTheme}>
                         {isDarkMode ? 'Light mode' : 'Dark mode'}
                     </button>
-                    <button onClick={handleSave} disabled={saveMutation.isPending}>
+                    <button className='whitespace-nowrap' onClick={handleSave} disabled={saveMutation.isPending}>
                         {saveMutation.isPending ? 'Saving...' : isDirty ? 'Save' : 'Saved'}
                     </button>
-                    <Link to="/mindmaps" className="button-link">
+                    <Link to="/mindmaps" className="button-link whitespace-nowrap">
                         Back
                     </Link>
                 </div>

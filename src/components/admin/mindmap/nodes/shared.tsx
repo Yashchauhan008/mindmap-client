@@ -36,7 +36,7 @@ export function BaseCustomNode({
 }: {
   selected: boolean;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   note?: string;
   tone?: 'pink' | 'purple' | 'blue' | 'green' | 'amber';
   imageUrl?: string;
