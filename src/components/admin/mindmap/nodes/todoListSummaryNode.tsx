@@ -48,7 +48,7 @@ function TodoListSummaryNodeCard({ id, data, selected }: NodeProps<AnyNode>) {
       selected={selected}
       tone="green"
       width={320}
-      title={(data?.label as string) || 'Todo Summary'}
+      title={(data?.label as string) || ''}
       subtitle={`${uniqueTodos.length} connected todos`}
       note={(data?.note as string) || ''}
       extraContent={
@@ -71,7 +71,7 @@ function TodoListSummaryNodeCard({ id, data, selected }: NodeProps<AnyNode>) {
                     className="thumb-label multi-todo-card-text"
                     style={{ textDecoration: completed ? 'line-through' : 'none' }}
                   >
-                    {String(todo.data?.label || 'Untitled')}
+                    {String(todo.data?.label || '')}
                   </span>
                 </div>
               );

@@ -17,6 +17,12 @@ export type AnyNode = Node<Record<string, unknown>, string>;
 export type NodeCardComponent = (props: NodeProps<AnyNode>) => ReactNode;
 export type UpdateNodeData = (nodeId: string, patch: Record<string, unknown>) => void;
 
+export interface NodeInfo {
+  inputs?: string;
+  outputs?: string;
+  passThrough?: string;
+}
+
 export interface NodeInspectorContext {
   node: AnyNode;
   updateNodeData: UpdateNodeData;
@@ -32,4 +38,5 @@ export interface NodeDefinition {
   createData: (count: number) => Record<string, unknown>;
   normalizeData: (data: Record<string, unknown>, index: number) => Record<string, unknown>;
   renderInspector: (context: NodeInspectorContext) => ReactNode;
+  info?: NodeInfo;
 }

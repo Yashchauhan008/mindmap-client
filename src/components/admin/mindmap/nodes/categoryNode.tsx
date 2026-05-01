@@ -8,7 +8,7 @@ function CategoryNodeCard({ data, selected }: NodeProps<AnyNode>) {
     <BaseCustomNode
       selected={selected}
       tone="purple"
-      title={(data?.label as string) || 'Category'}
+      title={(data?.label as string) || ''}
       subtitle="Section header / cluster"
       note={(data?.note as string) || ''}
     />

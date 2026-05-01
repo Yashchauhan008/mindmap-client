@@ -33,6 +33,7 @@ export function BaseCustomNode({
   width,
   height,
   extraContent,
+  className,
 }: {
   selected: boolean;
   title: string;
@@ -46,10 +47,11 @@ export function BaseCustomNode({
   width?: number;
   height?: number;
   extraContent?: ReactNode;
+  className?: string;
 }) {
   return (
     <div
-      className={`mind-node-card ${tone} ${selected ? 'selected' : ''} ${imageUrl ? 'has-image' : ''}`}
+      className={`mind-node-card ${tone} ${selected ? 'selected' : ''} ${imageUrl ? 'has-image' : ''} ${className || ''}`}
       style={{
         width: typeof width === 'number' ? `${Math.max(160, width)}px` : undefined,
         minHeight: typeof height === 'number' ? `${Math.max(110, height)}px` : undefined,
@@ -96,7 +98,7 @@ export function TextAndNoteFields({
         id={`node-label-${nodeId}`}
         value={label}
         onChange={(event) => {
-          updateField(nodeId, { label: event.target.value || 'Untitled idea' });
+          updateField(nodeId, { label: event.target.value });
         }}
         placeholder="Write your idea..."
       />

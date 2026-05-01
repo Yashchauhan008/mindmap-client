@@ -15,7 +15,8 @@ function PercentageNodeCard({ id, data, selected }: NodeProps<AnyNode>) {
     <BaseCustomNode
       selected={selected}
       tone="green"
-      title={(data?.label as string) || 'Progress'}
+      className="percentage-node"
+      title={(data?.label as string) || ''}
       subtitle={`${percentage}% output (${inputCount} inputs)`}
       note={(data?.note as string) || ''}
       extraContent={

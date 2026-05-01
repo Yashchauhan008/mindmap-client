@@ -26,7 +26,7 @@ function StatusNodeCard({ data, selected }: NodeProps<AnyNode>) {
     <BaseCustomNode
       selected={selected}
       tone="purple"
-      title={(data?.label as string) || 'Status'}
+      title={(data?.label as string) || ''}
       subtitle={`${statuses.length} statuses available`}
       note={(data?.note as string) || ''}
       extraContent={

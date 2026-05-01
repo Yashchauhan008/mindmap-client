@@ -23,7 +23,8 @@ import axiosInstance from '../services/http';
 import axios from 'axios';
 import {
     createNodeDataByType,
-    nodeTypeOptions,
+    getPreviewData,
+    NODE_DEFINITIONS,
     nodeTypes,
     normalizeNodeDataByType,
     renderNodeInspector,
@@ -69,6 +70,7 @@ function FlowEditor({
     const [selectedNodeIds, setSelectedNodeIds] = useState<string[]>([]);
     const [selectedEdgeIds, setSelectedEdgeIds] = useState<string[]>([]);
     const [mediaUploadError, setMediaUploadError] = useState('');
+    const [showInfoFor, setShowInfoFor] = useState<string | null>(null);
 
     const defaultEdgeOptions = useMemo(
         () => ({
@@ -368,17 +370,79 @@ function FlowEditor({
                     <h3>Custom Nodes</h3>
                     <p>Click a node item to add it to the canvas.</p>
                     <div className="quick-node-grid">
-                        {nodeTypeOptions.map((option) => (
-                            <button
-                                key={option.type}
-                                className="ghost"
-                                onClick={() => handleQuickAdd(option.type)}
-                            >
-                                {option.label}
-                            </button>
-                        ))}
+                        {NODE_DEFINITIONS.map((def) => {
+                            const PreviewCard = def.Card;
+                            return (
+                                <button
+                                    key={def.type}
+                                    className="node-preview-button"
+                                    onClick={() => handleQuickAdd(def.type)}
+                                    title={`Add ${def.label}`}
+                                >
+                                    <div className="node-preview-wrapper">
+                                        <PreviewCard
+                                            id={`preview-${def.type}`}
+                                            data={getPreviewData(def.type)}
+                                            selected={false}
+                                            type={def.type}
+                                            zIndex={0}
+                                            isConnectable={false}
+                                            xPos={0}
+                                            yPos={0}
+                                            dragging={false}
+                                            {...({} as any)}
+                                        />
+                                    </div>
+                                    <div className="node-preview-footer">
+                                        <span className="node-preview-label">{def.label}</span>
+                                        <button
+                                            type="button"
+                                            className="info-trigger"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setShowInfoFor(showInfoFor === def.type ? null : def.type);
+                                            }}
+                                            title="View Node Logic"
+                                        >
+                                            i
+                                        </button>
+                                    </div>
+
+                                </button>
+                            );
+                        })}
                     </div>
                 </aside>
+
+                {showInfoFor && (() => {
+                    const def = NODE_DEFINITIONS.find(d => d.type === showInfoFor);
+                    if (!def) return null;
+                    return (
+                        <div className="node-info-floating-panel" onClick={(e) => e.stopPropagation()}>
+                            <div className="info-header">
+                                <h3>{def.label} Logic</h3>
+                                <button className="close-btn" onClick={() => setShowInfoFor(null)}>&times;</button>
+                            </div>
+                            <div className="info-body">
+                                <div className="info-section">
+                                    <label>Inputs</label>
+                                    <p>{def.info?.inputs || 'N/A'}</p>
+                                </div>
+                                <div className="info-section">
+                                    <label>Outputs</label>
+                                    <p>{def.info?.outputs || 'N/A'}</p>
+                                </div>
+                                <div className="info-section">
+                                    <label>Data Pass-through</label>
+                                    <p>{def.info?.passThrough || 'N/A'}</p>
+                                </div>
+                            </div>
+                            <div className="info-footer">
+                                <p>This node is used for {def.label.toLowerCase()} purposes in your mind map.</p>
+                            </div>
+                        </div>
+                    );
+                })()}
 
                 <div className="editor-canvas">
                     <ReactFlow

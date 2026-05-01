@@ -31,7 +31,7 @@ function IdeaNodeCard({ id, data, selected }: NodeProps<AnyNode>) {
     <BaseCustomNode
       selected={selected}
       tone="pink"
-      title={(data?.label as string) || 'Untitled idea'}
+      title={(data?.label as string) || ''}
       subtitle="Drag and connect ideas"
       note={(data?.note as string) || ''}
       extraContent={

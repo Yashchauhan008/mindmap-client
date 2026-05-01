@@ -18,7 +18,7 @@ function MediaNodeCard({ data, selected }: NodeProps<AnyNode>) {
     <BaseCustomNode
       selected={selected}
       tone="purple"
-      title={(data?.label as string) || 'Media asset'}
+      title={(data?.label as string) || ''}
       subtitle={mediaUrl ? `Uploaded ${mediaType}` : 'Upload media from inspector'}
       imageUrl={mediaUrl}
       mediaType={mediaType}
