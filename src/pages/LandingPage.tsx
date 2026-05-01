@@ -8,7 +8,7 @@ export default function LandingPage() {
     const { token } = useAuth();
 
     // Initial nodes for the interactive demo
-    const [nodes, setNodes, onNodesChange] = useNodesState([
+    const [nodes, , onNodesChange] = useNodesState([
         {
             id: 'demo-idea',
             type: 'ideaNode',
@@ -35,7 +35,7 @@ export default function LandingPage() {
         },
     ]);
 
-    const [edges, setEdges, onEdgesChange] = useEdgesState([
+    const [edges, , onEdgesChange] = useEdgesState([
         { id: 'e1', source: 'demo-idea', target: 'demo-percent', animated: true, style: { stroke: '#3b82f6' } },
         { id: 'e2', source: 'demo-todo', target: 'demo-percent', animated: true, style: { stroke: '#10b981' } },
         { id: 'e3', source: 'demo-calendar', target: 'demo-percent', animated: true, style: { stroke: '#6366f1' } },
@@ -142,7 +142,7 @@ export default function LandingPage() {
                                         minZoom={0.5}
                                         maxZoom={1.5}
                                     >
-                                        <Background color="#cbd5e1" dark={false} gap={20} />
+                                        <Background color="#cbd5e1" gap={20} />
                                     </ReactFlow>
                                 </div>
                             </div>

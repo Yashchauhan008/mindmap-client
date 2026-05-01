@@ -10,7 +10,7 @@ import { statusNodeDefinition } from './statusNode';
 import { todoNodeDefinition } from './todoNode';
 import { todoListSummaryNodeDefinition } from './todoListSummaryNode';
 import { calendarNodeDefinition } from './calendarNode';
-import type { NodeDefinition, NodeInspectorContext, SupportedNodeType } from './types';
+import type { NodeDefinition, NodeInspectorContext, SupportedNodeType, NodeInfo } from './types';
 
 const NODE_INFO_MAP: Record<SupportedNodeType, NodeInfo> = {
   ideaNode: {
